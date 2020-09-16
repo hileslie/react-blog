@@ -4,6 +4,7 @@ import {Row, Col, List, Icon} from 'antd';
 import Header from '../components/Header'
 import '../static/style/pages/index.less'
 import Author from '../components/Author'
+import Advert from '../components/Advert'
 // import List from './list'
 // import Detail from './detail'
 const Home = () => {
@@ -52,6 +53,7 @@ const Home = () => {
 				</Col>
 				<Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
 					<Author></Author>
+					<Advert></Advert>
 				</Col>
 			</Row>
 		</>
