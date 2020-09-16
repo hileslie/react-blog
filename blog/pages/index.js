@@ -6,8 +6,6 @@ import '../static/style/pages/index.less'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
-// import List from './list'
-// import Detail from './detail'
 const Home = () => {
 
 	const [myList, setMyList] = useState(
