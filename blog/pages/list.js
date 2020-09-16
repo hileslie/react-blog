@@ -45,9 +45,9 @@ const ListPage = () => {
 							<List.Item>
 								<div className="list-title">{item.title}</div>
 								<div className="list-icon">
-									<span><Icon type="" /> 2020-20-20 </span>
-									<span><Icon type="" /> 视频教程 </span>
-									<span><Icon type="fire" /> 666人 </span>
+									<span><Icon type="calendar" />2020-20-20</span>
+									<span><Icon type="folder" />视频</span>
+									<span><Icon type="fire" />666</span>
 								</div>
 								<div className="list-context">{item.context}</div>
 							</List.Item>
