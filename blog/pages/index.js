@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import '../static/style/pages/index.less'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
+import Footer from '../components/Footer'
 // import List from './list'
 // import Detail from './detail'
 const Home = () => {
@@ -56,6 +57,7 @@ const Home = () => {
 					<Advert></Advert>
 				</Col>
 			</Row>
+			<Footer></Footer>
 		</>
 	)
 }
