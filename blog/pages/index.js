@@ -6,24 +6,10 @@ import '../static/style/pages/index.less'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
-const Home = () => {
+import axios from 'axios';
+const Home = (list) => {
 
-	const [myList, setMyList] = useState(
-		[
-			{
-				title: '1xx',
-				context: '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			},
-			{
-				title: '2xx',
-				context: '2xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			},
-			{
-				title: '3xx',
-				context: '3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			}
-		]
-	) 
+	const [myList, setMyList] = useState(list.data) 
 
 	return (
 		<>
@@ -41,11 +27,11 @@ const Home = () => {
 							<List.Item>
 								<div className="list-title">{item.title}</div>
 								<div className="list-icon">
-									<span><Icon type="calendar" />2020-20-20</span>
-									<span><Icon type="folder" />视频</span>
-									<span><Icon type="fire" />666</span>
+									<span><Icon type="calendar" />{item.add_time}</span>
+									<span><Icon type="folder" />{item.type_name}</span>
+									<span><Icon type="fire" />{item.view_count}</span>
 								</div>
-								<div className="list-context">{item.context}</div>
+								<div className="list-context">{item.introduce}</div>
 							</List.Item>
 						)}
 					/>
@@ -58,6 +44,17 @@ const Home = () => {
 			<Footer></Footer>
 		</>
 	)
+}
+
+Home.getInitialProps = async () => {
+	const promise = new Promise((resolve) => {
+		axios('http://127.0.0.1:7001/frontend/get/article/list').then((res) => {
+			console.log('res.data: >>>', res)
+			resolve(res.data)
+		})
+	})
+
+	return await promise
 }
 
 export default Home;
