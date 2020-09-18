@@ -103,7 +103,7 @@ const Detail = () => {
 Detail.getInitialProps = async(context) => {
 	let id = context.query.id;
 	const promise = new Promise((resolve) => {
-		axios('http://127.0.0.1:7001/frontend/get/article/detail/' + id).then((res) => {
+		axios('http://127.0.0.1:7001/api/article/detail/' + id).then((res) => {
 			console.log(res.data)
 			resolve(res.data.data[0])
 		})

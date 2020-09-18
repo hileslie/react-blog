@@ -53,8 +53,7 @@ const Home = (list) => {
 
 Home.getInitialProps = async () => {
 	const promise = new Promise((resolve) => {
-		axios('http://127.0.0.1:7001/frontend/get/article/list').then((res) => {
-			console.log('res.data: >>>', res)
+		axios('http://127.0.0.1:7001/api/article/list').then((res) => {
 			resolve(res.data)
 		})
 	})
