@@ -1,5 +1,6 @@
 import React , { useState } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import {Row, Col, List, Icon} from 'antd';
 import Header from '../components/Header'
 import '../static/style/pages/index.less'
@@ -25,7 +26,11 @@ const Home = (list) => {
 						dataSource={myList}
 						renderItem={(item) => (
 							<List.Item>
-								<div className="list-title">{item.title}</div>
+								<div className="list-title">
+									<Link href={{pathname:'/detail', query: {id: item.id}}}>
+										<a>{item.title}</a>
+									</Link>
+								</div>
 								<div className="list-icon">
 									<span><Icon type="calendar" />{item.add_time}</span>
 									<span><Icon type="folder" />{item.type_name}</span>
