@@ -16,7 +16,7 @@ import Tocify from  '../components/tocify.tsx';
 
 import servicePath from '../pages/api/api_url'
 
-const Detail = (props) => {
+const Detail = (details) => {
 	const tocify = new Tocify();
 	const renderer = new marked.Renderer();
 
@@ -39,11 +39,11 @@ const Detail = (props) => {
 			return hljs.highlightAuto(code).value;
 		}
 	})
-	let html = marked(props.article_content)
+	let html = marked(details.article_content)
 	return (
 		<>
 			<Head>
-				<title>Detail</title>
+				<title>{details.title}</title>
 			</Head>
 			<Header></Header>
 			<Row className="comm-main" type="flex" justify="center">
@@ -51,18 +51,18 @@ const Detail = (props) => {
 					<div className="bread-div">
 						<Breadcrumb>
 							<Breadcrumb.Item><a href="/">首页</a></Breadcrumb.Item>
-							<Breadcrumb.Item><a href="/">视频列表</a></Breadcrumb.Item>
-							<Breadcrumb.Item>文章xxx</Breadcrumb.Item>
+							<Breadcrumb.Item><a href={'/list?id=' + details.type_id}>{details.type_name}</a></Breadcrumb.Item>
+							<Breadcrumb.Item>{details.title}</Breadcrumb.Item>
 						</Breadcrumb>
 					</div>
 					<div>
 						<div className="detail-title">
-							xxx-title
+							{details.title}
 						</div>
 						<div className="list-icon center">
-							<span><Icon type="calendar" />2020-20-20</span>
-							<span><Icon type="folder" />视频</span>
-							<span><Icon type="fire" />666</span>
+								<span><Icon type="calendar" />{details.add_time}</span>
+								<span><Icon type="folder" />{details.type_name}</span>
+								<span><Icon type="fire" />{details.view_count}</span>
 						</div>
 						<div className="detail-content"
 							dangerouslySetInnerHTML={{__html: html}}

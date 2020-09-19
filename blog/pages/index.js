@@ -8,15 +8,33 @@ import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import axios from 'axios';
-import servicePath from './api/api_url'
+import servicePath from './api/api_url';
+
+import marked from 'marked';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/monokai-sublime.css';
+
 const Home = (list) => {
 
+	const renderer = new marked.Renderer();
+	marked.setOptions({
+		renderer: renderer,
+		gfm: true,
+		pedantic: false,
+		sanitize: false,
+		tables: true,
+		breaks: false,
+		smartLists: true,
+		highlight: function(code) {
+			return hljs.highlightAuto(code).value;
+		}
+	})
 	const [myList, setMyList] = useState(list.data) 
 
 	return (
 		<>
 			<Head>
-				<title>Home</title>
+				<title>首页</title>
 			</Head>
 			<Header></Header>
 			<Row className="comm-main" type="flex" justify="center">
@@ -37,7 +55,9 @@ const Home = (list) => {
 									<span><Icon type="folder" />{item.type_name}</span>
 									<span><Icon type="fire" />{item.view_count}</span>
 								</div>
-								<div className="list-context">{item.introduce}</div>
+								<div className="list-context"
+									dangerouslySetInnerHTML={{__html: marked(item.introduce)}}
+								></div>
 							</List.Item>
 						)}
 					/>

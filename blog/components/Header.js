@@ -2,10 +2,9 @@ import React, {useState, useEffect} from 'react';
 import '../static/style/components/header.less';
 import { Row,Col, Menu, Icon } from 'antd';
 import Router from 'next/router';
-import Link from 'next/link';
 import axios from 'axios';
 
-import servicePath from '../pages/api/api_url'
+import servicePath from '../pages/api/api_url';
 
 const Header = () => {
     const [navArray, setNavArray] = useState([])
@@ -20,7 +19,6 @@ const Header = () => {
     }, [])
 
     const handleClick = (e) => {
-        console.log(e.key)
         if(+e.key === 0) {
             Router.push('/')
         } else {
@@ -45,7 +43,7 @@ const Header = () => {
                             navArray.map((item) => {
                                 return (
                                     <Menu.Item key={item.Id}>
-                                        <Icon type="youtube" />
+                                        <Icon type={item.icon} />
                                         {item.type_name}
                                     </Menu.Item>
                                 )

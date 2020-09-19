@@ -2,14 +2,30 @@ import React , { useState, useEffect } from 'react';
 import Head from 'next/head';
 import {Row, Col, List, Icon, Breadcrumb} from 'antd';
 import Header from '../components/Header'
-import '../static/style/pages/index.less'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import axios from 'axios';
 import servicePath from './api/api_url'
 import Link from 'next/link';
+import '../static/style/pages/list.less'
+import marked from 'marked';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/monokai-sublime.css';
 const ListPage = (list) => {
+	const renderer = new marked.Renderer();
+	marked.setOptions({
+		renderer: renderer,
+		gfm: true,
+		pedantic: false,
+		sanitize: false,
+		tables: true,
+		breaks: false,
+		smartLists: true,
+		highlight: function(code) {
+			return hljs.highlightAuto(code).value;
+		}
+	})
 	const [myList, setMyList] = useState(list.data)
 	useEffect(() => {
 		setMyList(list.data)
@@ -25,7 +41,7 @@ const ListPage = (list) => {
 					<div className="bread-div">
 						<Breadcrumb>
 							<Breadcrumb.Item><a href="/">首页</a></Breadcrumb.Item>
-							<Breadcrumb.Item>视频</Breadcrumb.Item>
+							<Breadcrumb.Item>{myList[0] ? myList[0].type_name : '/'}</Breadcrumb.Item>
 						</Breadcrumb>
 					</div>
 					<List
@@ -44,7 +60,9 @@ const ListPage = (list) => {
 									<span><Icon type="folder" />{item.type_name}</span>
 									<span><Icon type="fire" />{item.view_count}</span>
 								</div>
-								<div className="list-context">{item.introduce}</div>
+								<div className="list-context"
+									dangerouslySetInnerHTML={{__html: marked(item.introduce)}}
+								></div>
 							</List.Item>
 						)}
 					/>
