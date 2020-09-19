@@ -6,8 +6,8 @@ import Layout from './layout';
 function Main() {
     return (
         <Router>
-            <Route path='/login/' exact component={Login}></Route>
-            <Route path='/index/' exact component={Layout}></Route>
+            <Route path='/login' exact component={Login}></Route>
+            <Route path='/index' exact component={Layout}></Route>
         </Router>
     )
 }
