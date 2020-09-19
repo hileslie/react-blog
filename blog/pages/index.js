@@ -8,6 +8,7 @@ import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import axios from 'axios';
+import servicePath from '../config/api_url'
 const Home = (list) => {
 
 	const [myList, setMyList] = useState(list.data) 
@@ -53,7 +54,7 @@ const Home = (list) => {
 
 Home.getInitialProps = async () => {
 	const promise = new Promise((resolve) => {
-		axios('http://127.0.0.1:7001/api/article/list').then((res) => {
+		axios(servicePath.articleList).then((res) => {
 			resolve(res.data);
 		})
 	})

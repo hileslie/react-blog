@@ -21,7 +21,7 @@ class HomeController extends Controller {
   }
 
   async getArticleById() {
-	let id = this.ctx.params.id;
+    let id = this.ctx.params.id;
     let sql =
       "SELECT article.id as id ," +
       "article.title as title ," +
@@ -35,7 +35,12 @@ class HomeController extends Controller {
       "WHERE article.id=" +
       id;
 
-	const reslut = await this.app.mysql.query(sql);
+    const reslut = await this.app.mysql.query(sql);
+    this.ctx.body = { data: reslut };
+  }
+
+  async getTypeInfo() {
+    const reslut = await this.app.mysql.select("type");
     this.ctx.body = { data: reslut };
   }
 }
