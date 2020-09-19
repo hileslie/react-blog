@@ -8,6 +8,8 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import "../static/style/layout.scss";
+import { Route } from 'react-router-dom';
+import AddArticle from './addArticle'
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -44,7 +46,6 @@ function SiderDemo() {
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
@@ -54,7 +55,7 @@ function SiderDemo() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            Bill is a cat.
+                <Route path='/index/' exact component={AddArticle}></Route>
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
