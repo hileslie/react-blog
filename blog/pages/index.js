@@ -8,7 +8,7 @@ import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import axios from 'axios';
-import servicePath from '../config/api_url'
+import servicePath from './api/api_url'
 const Home = (list) => {
 
 	const [myList, setMyList] = useState(list.data) 
@@ -54,7 +54,7 @@ const Home = (list) => {
 
 Home.getInitialProps = async () => {
 	const promise = new Promise((resolve) => {
-		axios(servicePath.articleList).then((res) => {
+		axios(servicePath.getArticleList).then((res) => {
 			resolve(res.data);
 		})
 	})

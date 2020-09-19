@@ -5,13 +5,13 @@ import Router from 'next/router';
 import Link from 'next/link';
 import axios from 'axios';
 
-import servicePath from '../config/api_url'
+import servicePath from '../pages/api/api_url'
 
 const Header = () => {
     const [navArray, setNavArray] = useState([])
     useEffect(() => {
         const result = async () => {
-            const resp = await axios(servicePath.type).then((res) => {
+            const resp = await axios(servicePath.getTypeInfo).then((res) => {
                 return res.data.data
             })
             setNavArray(resp)

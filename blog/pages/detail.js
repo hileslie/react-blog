@@ -14,7 +14,7 @@ import 'highlight.js/styles/monokai-sublime.css';
 
 import Tocify from  '../components/tocify.tsx';
 
-import servicePath from '../config/api_url'
+import servicePath from '../pages/api/api_url'
 
 const Detail = (props) => {
 	const tocify = new Tocify();
@@ -91,7 +91,7 @@ const Detail = (props) => {
 Detail.getInitialProps = async(context) => {
 	let id = context.query.id;
 	const promise = new Promise((resolve) => {
-		axios(servicePath.articleDetail + id).then((res) => {
+		axios(servicePath.getArticleDetailById + id).then((res) => {
 			resolve(res.data.data[0]);
 		})
 	})

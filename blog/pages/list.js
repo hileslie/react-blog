@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React , { useState, useEffect } from 'react';
 import Head from 'next/head';
 import {Row, Col, List, Icon, Breadcrumb} from 'antd';
 import Header from '../components/Header'
@@ -6,23 +6,14 @@ import '../static/style/pages/index.less'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
-const ListPage = () => {
-	const [myList, setMyList] = useState(
-		[
-			{
-				title: '1xx',
-				context: '1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			},
-			{
-				title: '2xx',
-				context: '2xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			},
-			{
-				title: '3xx',
-				context: '3xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
-			}
-		]
-	) 
+import axios from 'axios';
+import servicePath from './api/api_url'
+import Link from 'next/link';
+const ListPage = (list) => {
+	const [myList, setMyList] = useState(list.data)
+	useEffect(() => {
+		setMyList(list.data)
+	})
 	return (
 		<>
 			<Head>
@@ -43,13 +34,17 @@ const ListPage = () => {
 						dataSource={myList}
 						renderItem={(item) => (
 							<List.Item>
-								<div className="list-title">{item.title}</div>
-								<div className="list-icon">
-									<span><Icon type="calendar" />2020-20-20</span>
-									<span><Icon type="folder" />视频</span>
-									<span><Icon type="fire" />666</span>
+								<div className="list-title">
+									<Link href={{pathname:'/detail', query: {id: item.id}}}>
+										<a>{item.title}</a>
+									</Link>
 								</div>
-								<div className="list-context">{item.context}</div>
+								<div className="list-icon">
+									<span><Icon type="calendar" />{item.add_time}</span>
+									<span><Icon type="folder" />{item.type_name}</span>
+									<span><Icon type="fire" />{item.view_count}</span>
+								</div>
+								<div className="list-context">{item.introduce}</div>
 							</List.Item>
 						)}
 					/>
@@ -62,5 +57,16 @@ const ListPage = () => {
 			<Footer></Footer>
 		</>
 	)
+}
+
+ListPage.getInitialProps = async (context) => {
+	let id = context.query.id;
+	const promise = new Promise((resolve) => {
+		axios(servicePath.getArticleListById + id).then((res) => {
+			resolve(res.data);
+		})
+	})
+
+	return await promise
 }
 export default ListPage;
