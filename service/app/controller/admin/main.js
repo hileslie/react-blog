@@ -32,6 +32,26 @@ class MainController extends Controller {
             data: res,
         }
     }
+
+    async addArticle() {
+        let tmp = this.ctx.request.body;
+        const res = await this.app.mysql.insert('article', tmp);
+        const insertSuccess = res.affectedRows === 1;
+        const insertId = res.insertId;
+        this.ctx.body = {
+            success: insertSuccess,
+            insertId,
+        }
+    }
+
+    async updateArticle() {
+        let tmp = this.ctx.request.body;
+        const res = await this.app.mysql.update('article', tmp);
+        const updateSuccess = res.affectedRows === 1;
+        this.ctx.body = {
+            success: updateSuccess,
+        }
+    }
 }
 
 module.exports = MainController;
