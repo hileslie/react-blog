@@ -6,6 +6,7 @@ let servicePath = {
     updateArticle: url + 'article/update',
     getArticleList: url + 'article/list',
     delArticle: url + 'article/del',
+    getArticleById: url + 'article/'
 }
 
 export default servicePath;

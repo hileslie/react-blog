@@ -6,8 +6,12 @@ import '../static/style/articleList.scss';
 
 const {confirm} = Modal;
 
-function ArticleList() {
+function ArticleList(props) {
     const [list, setList] = useState([]);
+
+    useEffect(() => {
+        getList();
+    }, [])
 
     const getList = () => {
         axios({
@@ -18,10 +22,6 @@ function ArticleList() {
             setList(res.data.list)
         })
     }
-
-    useEffect(() => {
-        getList();
-    }, [])
 
     const delArticle = (id) => {
         confirm({
@@ -43,6 +43,10 @@ function ArticleList() {
             onCancel() {
             }
         })
+    }
+
+    const updateArticle = (id, checked) => {
+        props.history.push('/index/edit/' + id);
     }
 
     return (
@@ -75,7 +79,7 @@ function ArticleList() {
                                 {item.view_count}    
                             </Col>
                             <Col span={4}>
-                                <Button type="primary">修改</Button>&nbsp;
+                                <Button type="primary" onClick={() => {updateArticle(item.id)}}>修改</Button>&nbsp;
                                 <Button onClick={() => {delArticle(item.id)}}>删除</Button>
                             </Col>
                         </Row>

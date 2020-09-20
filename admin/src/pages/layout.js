@@ -58,6 +58,7 @@ function SiderDemo(props) {
           >
             <Route path="/index/" exact component={AddArticle} />
             <Route path="/index/add/" exact component={AddArticle} />
+            <Route path="/index/edit/:id" exact component={AddArticle} />
             <Route path="/index/list/" exact component={ArticleList} />
           </div>
         </Content>

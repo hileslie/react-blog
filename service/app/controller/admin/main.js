@@ -4,7 +4,7 @@ const Controller = require("egg").Controller;
 
 class MainController extends Controller {
     async index() {
-        this.ctx.body = 'xxxxx'
+        this.ctx.body = 'hi leslie'
     }
 
     async checkLogin() {
@@ -76,6 +76,27 @@ class MainController extends Controller {
         this.ctx.body = {
             data: res,
         }
+    }
+
+    async getArticleById() {
+       let id = this.ctx.params.id;
+       let sql =
+        "SELECT article.id as id ," +
+        "article.title as title ," +
+        "article.introduce as introduce ," +
+        "FROM_UNIXTIME(article.add_time, '%Y-%m-%d') as add_time ," +
+        "article.view_count as view_count ," +
+        "article.article_content as article_content ," +
+        "type.type_name as type_name ," +
+        "type.id as type_id " +
+        "FROM article LEFT JOIN type ON article.type_id = type.Id " + 
+        "WHERE article.id=" + id;
+
+        const res = await this.app.mysql.query(sql);
+        this.ctx.body = {
+            data: res
+        }
+        
     }
 }
 

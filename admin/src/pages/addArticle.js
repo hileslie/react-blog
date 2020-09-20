@@ -4,6 +4,7 @@ import "../static/style/addArticle.scss";
 import { Row, Col, Input, Select, Button, DatePicker, message } from "antd";
 import axios from 'axios';
 import servicePath from '../api/api_url';
+import moment from 'moment';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -22,6 +23,11 @@ function AddArticle(props) {
 
     useEffect(() => {
         getTypeInfo();
+        let tmpId = props.match.params.id;
+        if (tmpId) {
+            setArticleId(tmpId);
+            getArticleById(tmpId);
+        }
     }, [])
 
     marked.setOptions({
@@ -127,6 +133,27 @@ function AddArticle(props) {
 
         }
     }
+
+    const getArticleById = (id) => {
+        axios({
+            method: 'get',
+            url: servicePath.getArticleById + id,
+            withCredentials: true,
+        }).then((res) => {
+            let articleInfo = res.data.data[0];
+            console.log('articleInfo: ', articleInfo)
+            setArticleTitle(articleInfo.title);
+            setArticleContent(articleInfo.article_content);
+            let html = marked(articleInfo.article_content);
+            setMarkdownContent(html);
+            setIntroducemd(articleInfo.introduce);
+            let indHtml = marked(articleInfo.introduce);
+            setIntroducehtml(indHtml);
+            setShowDate(articleInfo.add_time);
+            setSelectType(articleInfo.type_id);
+        })
+    }
+
     return (
         <div>
             <Row gutter={5}>
@@ -145,6 +172,7 @@ function AddArticle(props) {
                                 defaultValue={selectedType}
                                 size="large"
                                 onChange={selelctTypeHandler}
+                                value={selectedType}
                             >
                                 {
                                     typeInfo.map((item, index) => {
@@ -164,6 +192,7 @@ function AddArticle(props) {
                                 rows={35}
                                 placeholder="文章内容"
                                 onChange={changeContent}
+                                value={articleContent}
                             />
                         </Col>
                         <Col span={12}>
@@ -185,6 +214,7 @@ function AddArticle(props) {
                                 rows={4}
                                 placeholder="文章简介"
                                 onChange={changeIntroduce}
+                                value={introducemd}
                             />
                             <br /><br />
                             <div className="introduce-html"
@@ -197,6 +227,7 @@ function AddArticle(props) {
                                     placeholder="发布日期"
                                     size="large"
                                     onChange={(date, dateString) => {setShowDate(dateString)}}
+                                    value={moment(showDate, 'YYYY-MM-DD')}
                                 />
                             </div>
                         </Col>
