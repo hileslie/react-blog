@@ -4,41 +4,42 @@ import {
   DesktopOutlined,
   PieChartOutlined,
   FileOutlined,
-  TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import "../static/style/layout.scss";
-import { Route } from 'react-router-dom';
-import AddArticle from './addArticle'
+import { Route } from "react-router-dom";
+import AddArticle from "./addArticle";
+import ArticleList from "./articleList";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-function SiderDemo() {
+function SiderDemo(props) {
   const [collapsed, setCollapsed] = useState(false);
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
   };
 
+  const handleClickArticle = (e) => {
+	  if (e.key === 'addArticle') {
+		props.history.push('/index/add');
+	  } else {
+		props.history.push('/index/list');
+	  }
+  }
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={onCollapse}
-      >
+      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
           <Menu.Item key="1" icon={<PieChartOutlined />}>
             工作台
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            添加文章
-          </Menu.Item>
-          <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理">
-            <Menu.Item key="3">添加文章</Menu.Item>
-            <Menu.Item key="4">文章列表</Menu.Item>
+          <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理" onClick={handleClickArticle}>
+            <Menu.Item key="addArticle">添加文章</Menu.Item>
+            <Menu.Item key="articleList">文章列表</Menu.Item>
           </SubMenu>
           <Menu.Item key="9" icon={<FileOutlined />}>
             留言管理
@@ -55,7 +56,9 @@ function SiderDemo() {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-                <Route path='/index/' exact component={AddArticle}></Route>
+            <Route path="/index/" exact component={AddArticle} />
+            <Route path="/index/add/" exact component={AddArticle} />
+            <Route path="/index/list/" exact component={ArticleList} />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>
